@@ -1,0 +1,35 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{chat.name}}" >
+  <ion-content class="padding" when-scroll-ends="loadMoreRecords()">
+    <img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
+    <p>
+      {{chat.lastText}}
+    </p>
+
+
+    <!-- <ion-list when-scroll-ends="loadMoreRecords()"> -->
+    <!-- <ion-list>
+      <ion-item ng-repeat="stock in stockList">
+        <p>{{stock.dateValue | date:'mediumDate'}}</p>
+        <p>{{stock.price | currency:'$':2}}</p>    
+      </ion-item>
+    </ion-list> -->
+  <ion-list>
+    <ion-item ng-repeat="stock in stockList">
+      <p>{{stock.dateValue | date:'mediumDate'}}</p>
+      <p>{{stock.price | currency:'$':2}}</p>    
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll
+    on-infinite="loadMore()"
+    distance="1%">
+  </ion-infinite-scroll>
+
+  </ion-content>
+</ion-view>

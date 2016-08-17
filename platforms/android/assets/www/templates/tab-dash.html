@@ -1,38 +1,48 @@
 <ion-view view-title="Dashboard">
+  <ion-nav-buttons side="right">
+      <button class="button button-assertive" ng-click="logout()">
+        Logout
+      </button>
+  </ion-nav-buttons>
   <!-- <ion-floating-menu>
     <ion-floating-item icon="ion-camera" click="myEvent()"></ion-floating-item>
     <ion-floating-item icon="ion-person" click="myEvent()"></ion-floating-item>
   </ion-floating-menu> -->
   <ion-content class="padding">
+
+    <!-- 
+    <ion-list>
+      <ion-item ng-repeat="item in items">
+            <a class="item" href="#">
+              {{item.name}}
+            </a>       
+      </ion-item>
+    </ion-list> -->
+
     <div class="list">
 
       <div class="item item-divider">
-        Candy Bars
+        Auguest
       </div>
 
-      <a class="item" href="#">
-        Butterfinger
-      </a> 
-      <a class="item" href="#">
-        Butterfinger
-      </a> 
-      <a class="item" href="#">
-        Butterfinger
-      </a> 
-      <a class="item" href="#">
-        Butterfinger
-      </a> 
-      <a class="item" href="#">
-        Butterfinger
-      </a>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="item in items" href="#/tab/dash/{{item.id}}">        
+        <img ng-src="img/shoppingcart.png" >
+        <h2>{{item.name}}</h2>        
+        <p>Rs.{{item.price}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
 
       <div class="item item-divider">
-        Candy XXX
+        October
+      </div>            
+
+      <div >   
+        <button ng-click = "getData()" class="button icon-left ion-android-cart button-energized">Get Data</button>
       </div>
 
-      <a class="item" href="#">
-        Butterfinger
-      </a>       
+      <div>
+        <p>{{responseServer}}</p>
+      </div>
 
     </div>
   </ion-content>

@@ -24,7 +24,7 @@ var myPocket = angular.module('mypocket', ['ionic','ngMockE2E'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,USER_ROLES) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -57,6 +57,16 @@ var myPocket = angular.module('mypocket', ['ionic','ngMockE2E'])
     }
   })
 
+  .state('tab.dash-detail', {
+      url: '/dash/:dashId',
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/dash-detail.html',
+          controller: 'DashDetailCtrl'
+        }
+      }
+  })
+
   .state('tab.chats', {
       url: '/chats',
       views: {
@@ -66,7 +76,8 @@ var myPocket = angular.module('mypocket', ['ionic','ngMockE2E'])
         }
       }
     })
-    .state('tab.chat-detail', {
+  
+  .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {
         'tab-chats': {
@@ -74,7 +85,7 @@ var myPocket = angular.module('mypocket', ['ionic','ngMockE2E'])
           controller: 'ChatDetailCtrl'
         }
       }
-    })
+  })
 
   .state('tab.account', {
     url: '/account',
@@ -83,6 +94,9 @@ var myPocket = angular.module('mypocket', ['ionic','ngMockE2E'])
         templateUrl: 'templates/tab-account.html',
         controller: 'AccountCtrl'
       }
+    },
+    data: {
+      authorizedRoles: [USER_ROLES.admin]
     }
   });
 
@@ -100,5 +114,9 @@ var myPocket = angular.module('mypocket', ['ionic','ngMockE2E'])
         .respond(403, {message: "Not Authorized"});
  
   $httpBackend.whenGET(/templates\/\w+.*/).passThrough();
- });
- 
+  $httpBackend.whenGET('https://2-dot-prefab-berm-135123.appspot.com/web').passThrough();
+  $httpBackend.whenGET('http://localhost:8100/web').passThrough();
+  
+  
+
+});
