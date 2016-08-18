@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 //angular.module('mypocket', ['ionic', 'mypocket.controllers', 'mypocket.services','ngMockE2E'])
-var myPocket = angular.module('mypocket', ['ionic','ngMockE2E'])
+var myPocket = angular.module('mypocket', ['ionic','ngMockE2E','ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

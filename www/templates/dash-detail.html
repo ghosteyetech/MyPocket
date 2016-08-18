@@ -1,35 +1,40 @@
-<!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
--->
 <ion-view view-title="{{chat.name}}" >
-  <ion-content class="padding" when-scroll-ends="loadMoreRecords()">
-    <img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
-    <p>
-      {{chat.lastText}}
-    </p>
 
+  <ion-content>     
+    <ion-scroll direction="x" class="wide-as-needed" style="overflow: scroll;white-space: nowrap;">
+      <a ng-repeat="image in allImages" ng-click="showImages($index)" class="button inline-button" style="margin: 4px;">
+            <img ng-src="{{image.imgSrc}}" class="image-list-thumb" width="80" height="80" />
+       </a>        
+    </ion-scroll>
 
-    <!-- <ion-list when-scroll-ends="loadMoreRecords()"> -->
-    <!-- <ion-list>
+    <!-- <button class="button button-energized" ng-click="addImage()">
+      Add image
+    </button> -->
+  </ion-content>
+
+  <!-- <ion-content class="padding" style="margin-top: 23%;">
+    <button class="button button-energized" ng-click="addImage()">
+      Add image
+    </button><br><br>
+    <p>ImgObj {{imageObjCordova}}</p>
+    <ion-scroll>
+      <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="200px"/>
+    </ion-scroll>    
+  </ion-content> -->
+
+  <ion-content class="padding" style="margin-top: 30%;">
+    
+    <ion-list>
       <ion-item ng-repeat="stock in stockList">
         <p>{{stock.dateValue | date:'mediumDate'}}</p>
         <p>{{stock.price | currency:'$':2}}</p>    
       </ion-item>
-    </ion-list> -->
-  <ion-list>
-    <ion-item ng-repeat="stock in stockList">
-      <p>{{stock.dateValue | date:'mediumDate'}}</p>
-      <p>{{stock.price | currency:'$':2}}</p>    
-    </ion-item>
-  </ion-list>
+    </ion-list>
 
-  <ion-infinite-scroll
-    on-infinite="loadMore()"
-    distance="1%">
-  </ion-infinite-scroll>
+    <ion-infinite-scroll
+      on-infinite="loadMore()"
+      distance="1%">
+    </ion-infinite-scroll>
 
   </ion-content>
 </ion-view>
