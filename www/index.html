@@ -18,7 +18,7 @@
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -32,11 +32,17 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/constants.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/authenticationService.js" type="text/javascript"></script> 
-    <script src="js/myPocketDataService.js" type="text/javascript"></script>
-
+    
+    <script src="js/controllers/appControllers.js" type="text/javascript"></script>    
+    <script src="js/controllers/loginController.js" type="text/javascript"></script>
+    <script src="js/controllers/dashController.js" type="text/javascript"></script>
+    <script src="js/controllers/dashDetailController.js" type="text/javascript"></script>
+    
+    <script src="js/services/services.js" type="text/javascript"></script> 
+    <script src="js/services/AuthentcationInterceptor.js" type="text/javascript"></script> 
+    <script src="js/services/myPocketDataService.js" type="text/javascript"></script>
+    <script src="js/services/AutheticationService.js" type="text/javascript"></script>
+    
     <!-- ng-mock -->
     <script src="lib/angular-mocks/angular-mocks.js"></script>
 

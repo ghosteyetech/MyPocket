@@ -1,21 +1,4 @@
-myPocket.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
-  return {
-    responseError: function (response) {
-      //console.log(response);
-      $rootScope.$broadcast({
-        401: AUTH_EVENTS.notAuthenticated,
-        403: AUTH_EVENTS.notAuthorized
-      }[response.status], response);
-      return $q.reject(response);
-    }
-  };
-})
- 
-.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('AuthInterceptor');
-});
-
-myPocket.service('AuthService', function($q, $http, USER_ROLES) {
+myPocket.service('AuthService', function($q, $http, USER_ROLES,myPocketDataService,mypocketConfigs) {
   var LOCAL_TOKEN_KEY = 'yourTokenKey';
   var username = '';
   var isAuthenticated = false;
@@ -60,6 +43,22 @@ myPocket.service('AuthService', function($q, $http, USER_ROLES) {
  
   var login = function(name, pw) {
     return $q(function(resolve, reject) {
+
+      var url = mypocketConfigs.urlServer;
+      var data ={
+        userEmail : "ghostemail@gmail.com",
+        password : "asasasn1223"
+      };
+
+      myPocketDataService.get_ajax(url,data, {}, function(SuccessObj){
+          console.log("Login success");
+          console.log(SuccessObj);
+      }, function(ErrorObj){
+          console.log("Login Error");
+          console.log(ErrorObj);
+      });
+
+
       if ((name == 'admin' && pw == '1') || (name == 'user' && pw == '1')) {
         // Make a request and receive your auth token from your server
         storeUserCredentials(name + '.yourServerToken');
@@ -67,6 +66,7 @@ myPocket.service('AuthService', function($q, $http, USER_ROLES) {
       } else {
         reject('Login Failed.');
       }
+
     });
   };
  
