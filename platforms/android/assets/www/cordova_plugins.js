@@ -237,6 +237,22 @@ module.exports = [
             "cordova"
         ],
         "runs": true
+    },
+    {
+        "id": "cordova-plugin-app-preferences.apppreferences",
+        "file": "plugins/cordova-plugin-app-preferences/www/apppreferences.js",
+        "pluginId": "cordova-plugin-app-preferences",
+        "clobbers": [
+            "plugins.appPreferences"
+        ]
+    },
+    {
+        "id": "cordova-sqlite-storage.SQLitePlugin",
+        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+        "pluginId": "cordova-sqlite-storage",
+        "clobbers": [
+            "SQLitePlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -250,7 +266,9 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-camera": "2.2.0",
-    "cordova-plugin-file": "4.2.0"
+    "cordova-plugin-file": "4.2.0",
+    "cordova-plugin-app-preferences": "0.99.2",
+    "cordova-sqlite-storage": "1.4.7"
 };
 // BOTTOM OF METADATA
 });

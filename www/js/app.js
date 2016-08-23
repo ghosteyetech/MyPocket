@@ -116,7 +116,7 @@ var myPocket = angular.module('mypocket', ['ionic','ngMockE2E','ngCordova'])
   $httpBackend.whenGET(/templates\/\w+.*/).passThrough();
   $httpBackend.whenGET('https://2-dot-prefab-berm-135123.appspot.com/web').passThrough();
   
-  //$httpBackend.whenGET(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?/).passThrough();
+  $httpBackend.whenGET(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?/).passThrough();
 
   
 

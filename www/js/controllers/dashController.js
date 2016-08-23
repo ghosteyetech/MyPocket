@@ -1,5 +1,56 @@
-myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http,AuthService,myPocketDataService,ApiEndpoint) {
+myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordovaPreferences, $cordovaSQLite, AuthService,myPocketDataService,ApiEndpoint) {
 
+  //==============================SQLite Start
+  var db = null;
+
+
+  $scope.fetch = function() {
+    db = $cordovaSQLite.openDB({name:"nextflow.db", location:'default'});
+  };
+
+  $scope.store = function() {
+    
+    var newMessage = "hihihi ascbsca";
+
+    $cordovaSQLite.execute(db, 'CREATE TABLE IF NOT EXISTS Messages (id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT)');
+
+    $cordovaSQLite.execute(db, 'INSERT INTO Messages (message) VALUES (?)', [newMessage])
+        .then(function(result) {
+            $scope.responseServer = "Message saved successful, cheers!";
+    }, function(error) {
+            $scope.responseServer = "Error on saving: " + error.message;
+    })
+
+  };
+
+  $scope.show = function() {
+    $cordovaSQLite.execute(db, 'SELECT * FROM Messages ORDER BY id DESC')
+      .then(
+        function(result) {
+            if (result.rows.length > 0) {
+
+                var newMessage = result.rows.item(0).message;
+                $scope.responseServer = "Message loaded successful, cheers!"+newMessage;
+            }
+        },
+        function(error) {
+            $scope.responseServer = "Error on loading: " + error.message;
+        }
+    );
+
+  };
+
+  $scope.remove = function() {
+    db.close(successcb, errorcb);
+    function successcb(success){
+      $scope.responseServer = success;
+    }
+
+    function errorcb(err){
+      $scope.responseServer = err;
+    }
+  };  
+  //==============================SQLite end
 
 
   $scope.items = [ 

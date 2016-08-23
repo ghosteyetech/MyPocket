@@ -13,4 +13,9 @@ myPocket
 .constant('ApiEndpoint', {
   urlServer : 'https://2-dot-prefab-berm-135123.appspot.com/',	
   url: 'http://localhost:8100/web'
+})
+
+.constant('mypocketConfigs', {
+  urlServer : 'https://2-dot-prefab-berm-135123.appspot.com/web',	
+  
 });

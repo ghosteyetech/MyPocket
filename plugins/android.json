@@ -30,6 +30,12 @@
         },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.ionicframework.mypocket874542"
+        },
+        "cordova-plugin-app-preferences": {
+            "PACKAGE_NAME": "com.ionicframework.mypocket874542"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.ionicframework.mypocket874542"
         }
     },
     "dependent_plugins": {

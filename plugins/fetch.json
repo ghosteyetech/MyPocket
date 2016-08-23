@@ -70,5 +70,22 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-app-preferences": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-app-preferences"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-sqlite-storage": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/brodysoft/Cordova-SQLitePlugin.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

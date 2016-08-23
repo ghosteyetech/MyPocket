@@ -59,7 +59,7 @@ myPocket.service('AuthService', function($q, $http, USER_ROLES,myPocketDataServi
       });
 
 
-      if ((name == 'admin' && pw == '1') || (name == 'user' && pw == '1')) {
+      if ((name == '1' && pw == '1') || (name == 'user' && pw == '1')) {
         // Make a request and receive your auth token from your server
         storeUserCredentials(name + '.yourServerToken');
         resolve('Login success.');
