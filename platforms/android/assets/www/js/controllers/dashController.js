@@ -1,14 +1,17 @@
 myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordovaPreferences, $cordovaSQLite, AuthService,myPocketDataService,ApiEndpoint) {
 
-  //==============================Shared preferences
+  //==============================SQLite Start
   var db = null;
 
+
+  $scope.fetch = function() {
+    db = $cordovaSQLite.openDB({name:"nextflow.db", location:'default'});
+  };
+
   $scope.store = function() {
-    /**/
-    //=============
+    
     var newMessage = "hihihi ascbsca";
 
-    
     $cordovaSQLite.execute(db, 'CREATE TABLE IF NOT EXISTS Messages (id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT)');
 
     $cordovaSQLite.execute(db, 'INSERT INTO Messages (message) VALUES (?)', [newMessage])
@@ -18,28 +21,25 @@ myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordo
             $scope.responseServer = "Error on saving: " + error.message;
     })
 
-    //=============
   };
 
   $scope.show = function() {
     $cordovaSQLite.execute(db, 'SELECT * FROM Messages ORDER BY id DESC')
       .then(
         function(result) {
-            if (result.rows.length > 0) {
-
-                var newMessage = result.rows.item(0).message;
-                $scope.responseServer = "Message loaded successful, cheers!"+newMessage;
+            var i,len = result.rows.length;
+            $scope.responseServer = "Data : ";              
+            for(i=0; i<len; i++){
+                var newMessage = result.rows.item(i).message;
+                $scope.responseServer = $scope.responseServer + "\n" + newMessage;              
             }
+
         },
         function(error) {
             $scope.responseServer = "Error on loading: " + error.message;
         }
     );
 
-  };
-
-  $scope.fetch = function() {
-    db = $cordovaSQLite.openDB({name:"nextflow.db", location:'default'});
   };
 
   $scope.remove = function() {
@@ -52,7 +52,7 @@ myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordo
       $scope.responseServer = err;
     }
   };  
-  //==============================Shared preferences end
+  //==============================SQLite end
 
 
   $scope.items = [ 

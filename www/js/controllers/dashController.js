@@ -1,4 +1,4 @@
-myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordovaPreferences, $cordovaSQLite, AuthService,myPocketDataService,ApiEndpoint) {
+myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordovaPreferences, $cordovaSQLite, mypocketConfigs, mypocketData,AuthService,myPocketDataService,ApiEndpoint) {
 
   //==============================SQLite Start
   var db = null;
@@ -27,11 +27,13 @@ myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordo
     $cordovaSQLite.execute(db, 'SELECT * FROM Messages ORDER BY id DESC')
       .then(
         function(result) {
-            if (result.rows.length > 0) {
-
-                var newMessage = result.rows.item(0).message;
-                $scope.responseServer = "Message loaded successful, cheers!"+newMessage;
+            var i,len = result.rows.length;
+            $scope.responseServer = "Data : ";              
+            for(i=0; i<len; i++){
+                var newMessage = result.rows.item(i).message;
+                $scope.responseServer = $scope.responseServer + "\n" + newMessage;              
             }
+
         },
         function(error) {
             $scope.responseServer = "Error on loading: " + error.message;
@@ -53,11 +55,7 @@ myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordo
   //==============================SQLite end
 
 
-  $scope.items = [ 
-          {id:'1', name:'Expense - 01', price:'5000'},
-          {id:'2', name:'Expense - 02', price:'5000'}
-          
-  ];
+  
 
   $scope.responseServer = "Nothing";
 
@@ -78,32 +76,52 @@ myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordo
     
   };
 
-  $scope.showPrompt = function() {
+  $scope.items = [ 
+          {id:'1', name:'Expense - 01', price:'5000'},
+          {id:'2', name:'Expense - 02', price:'5000'}
+          
+  ];
+
+  $scope.createInstance = function(){
+      var data = {        
+        name : mypocketData.instance.name,
+        createdBy : mypocketData.user.userEmail,       
+        password : mypocketData.user.userPass
+      };
+
+      var url = mypocketConfigs.urlServer+"/createInstance";//Solved this problem using "Allow-Control-Allow-Origin: *" chrome extention
+      console.log("URL :"+url);
+      
+      console.log("Sending data to the server");
+      myPocketDataService.post_ajax(url,data, function (successObj){
+        console.log(successObj);
+        $scope.responseServer = successObj.data.instanceId; 
+        mypocketData.instance.id = successObj.data.instanceId; 
+
+      }, function (errorObj){
+        console.log(errorObj);
+        $scope.responseServer = errorObj.data;
+      });
+  };
+
+  $scope.AddnewExpense = function() {
 
       $scope.data = {};
 
       var promptPopup = $ionicPopup.prompt({
          title: 'New Expense',
-         template: '<div class="list">'
-                    +'<label class="item item-input item-floating-label">'
-                      +'<span class="input-label" >Expense ID</span>'
-                      +'<input type="text" placeholder="Expense ID" ng-model="data.id">'
-                    +'</label>'
+         template: '<div class="list">'                    
                     +'<label class="item item-input item-floating-label">'
                       +'<span class="input-label" >Expense Name</span>'
                       +'<input type="text" placeholder="Expense Name" ng-model="data.name">'
-                    +'</label>'
-                    +'<label class="item item-input item-floating-label">'
-                      +'<span class="input-label">Price</span>'
-                      +'<input type="text" placeholder="Price" ng-model="data.price">'
-                    +'</label>'                    
+                    +'</label>'                                     
                   +'</div>',        
         scope: $scope,
         buttons: [
           { text: 'Cancel' },
           {
             text: '<b>Save</b>',
-            type: 'button-positive',
+            type: 'button-positive', 
             onTap: function(e) {
               if (!$scope.data.name) {
                 console.log($scope.data);                
@@ -119,11 +137,39 @@ myPocket.controller('DashCtrl', function($scope,$ionicPopup,$state,$http, $cordo
          
       });
         
-      promptPopup.then(function(res) {
+      promptPopup.then(function(expense) {
          console.log("Data from popup :");
-         console.log(res);
-         $scope.items.push(res);
-      });
+         console.log(expense);
+         var item = {id:'1', name:expense.name, price:'0'};
+
+         if(expense != null){
+            $scope.items.push(item);
+
+            //===Send new expense to the server
+            console.log("User NAme: "+mypocketData.user.userEmail);            
+
+            var data = {
+              user : mypocketData.user.userEmail,
+              expenseName : expense.name
+            };
+
+            var url = mypocketConfigs.urlServer+"/expense";//Solved this problem using "Allow-Control-Allow-Origin: *" chrome extention
+            console.log("URL :"+url);
+            
+            console.log("Sending data to the server");
+            myPocketDataService.post_ajax(url,data, function (successObj){
+              console.log(successObj);
+              $scope.responseServer = successObj.data; 
+            }, function (errorObj){
+              console.log(errorObj);
+              $scope.responseServer = errorObj.data;
+            });
+
+            //================================
+
+         }
+         
+      });      
     
    };
 
